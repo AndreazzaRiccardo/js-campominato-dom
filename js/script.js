@@ -1,14 +1,21 @@
 const playBtn         = document.getElementById("play");
 const difficultSelect = document.getElementById("difficult");
 const gridElem        = document.querySelector(".grid");
+const result          = document.querySelector(".result");
+let bombs;
+let clickCell = [];
+let gridSize;
+
 
 playBtn.addEventListener("click", function(event){
     event.preventDefault();
     gridElem.innerHTML    = "";
     gridElem.style.border = "2px solid black";
-    let gridSize;
+    result.innerHTML      = "";
     let cellSize;
-
+    clickCell = [];
+    clickedBomb = false;
+    
     switch(difficultSelect.value) {
         case "easy":
             gridSize = 100;
@@ -38,6 +45,8 @@ playBtn.addEventListener("click", function(event){
 })
 
 
+
+
 /****************************************
 | * FUNZIONI:
 ++++++++++++++++++++++++++++++++++++++++/
@@ -55,12 +64,6 @@ function generateGridCell(innerNumber, cellSize) {
     return newCell;
 }
 
-function handleCellClick() {
-    const clickedNumber = parseInt(this.textContent);
-    this.style.backgroundColor = "lightblue"
-    console.log(clickedNumber);
-}
-
 /**
  * Genera un'array di 16 numeri casuali non ripetuti, compresi tra 1 e X numeri
  * @param {number} max
@@ -76,6 +79,41 @@ function generateBombs(max) {
     }
     return resultBomb;
 }
+
+
+/**
+ * Gestisce tutto il comportamento del gioco, al click di ogni cella
+ */
+function handleCellClick() {
+    const clickedNumber = parseInt(this.textContent);
+    if(!clickedBomb){
+        if(bombs.includes(clickedNumber)){
+            this.style.backgroundColor = "darkred";
+            result.innerHTML = `HAI PERSO DOPO ${clickCell.length} TENTATIVI`;
+            clickedBomb = true;
+        } else {
+            this.style.backgroundColor = "lightblue";
+
+            if(clickCell.length < (gridSize - bombs.length) - 1){
+                clickCell.push(clickedNumber);
+            } else {
+                result.innerHTML = "COMPLIMENTI! HAI VINTO!"
+                clickedBomb = true;
+            }
+        }
+    } 
+
+    if(clickedBomb){
+        const allCell = document.querySelectorAll(".cell");
+        for (let i = 0; i < allCell.length; i++) {
+            const element = allCell[i];
+            if(bombs.includes(parseInt(element.textContent))) {
+                element.style.backgroundColor = "darkred"
+            }
+        }
+    }
+}
+
 
 /**
  * Genera un numero casuale compreso tra un numero min e uno max
