@@ -18,7 +18,7 @@ con difficoltà 3 => tra 1 e 49
 ### FUNZIONI:
 1. Definisco una funzione per generare gli elementi cella nel mio HTML:
 
-        -creo il mio alemento div;
+        -creo il mio elemento div;
         -gli assegno una classe predefinita in css;
         -gli assegno una grandezza sulla base della difficoltà scelta;
         -inserisco all'interno dell'elemento il numero del suo indice creato con il ciclo for;
