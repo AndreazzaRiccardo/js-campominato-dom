@@ -69,6 +69,7 @@ button {
     font-weight: bolder;
     font-size: 1.4rem;
     background-color: rgb(170, 218, 170);
+    border-radius: 5px;
 }
 
 .cell {
@@ -84,4 +85,12 @@ button {
     font-size: 2rem;
     font-weight: bolder;
     color:darkred;
+}
+
+.bomb {
+    background-image:url(/img/bomb.webp);
+    background-position:center;
+    background-size: cover;
+    background-color: darkred;
+    color: white;
 }

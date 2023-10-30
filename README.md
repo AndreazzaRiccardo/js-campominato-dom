@@ -56,6 +56,7 @@ con difficoltà 3 => tra 1 e 49
 
 5. Definisco una funzione contenente gli eventi da sviluppare in caso la partita finisca:
 Con un ciclo for:
+
         -creo una costante abbinata ad ogni singola cella;
         -rimuovo l'eventListener da ogni cella;
         -gli dico che se il suo valore era incluso nell'array bombs, deve colorarsi di rosso;

@@ -1,21 +1,22 @@
-const playBtn         = document.getElementById("play");
-const difficultSelect = document.getElementById("difficult");
-const gridElem        = document.querySelector(".grid");
-const result          = document.querySelector(".result");
-let bombs;
-let clickCell = [];
-let gridSize;
+const playBtn   = document.getElementById("play");
+const difficult = document.getElementById("difficult");
+const gridElem  = document.querySelector(".grid");
+const result    = document.querySelector(".result");
+let clickCell   = [];
+let bombs
+let gridSize
 
 
 playBtn.addEventListener("click", function(event){
     event.preventDefault();
+
     gridElem.innerHTML    = "";
     gridElem.style.border = "2px solid black";
     result.innerHTML      = "";
-    let cellSize;
+    let cellSize
     clickCell = [];
     
-    switch(difficultSelect.value) {
+    switch(difficult.value) {
         case "easy":
             gridSize = 100;
             cellSize = "10"
@@ -41,6 +42,7 @@ playBtn.addEventListener("click", function(event){
     }
 
     bombs = generateBombs(gridSize);
+    console.log(bombs);
 })
 
 
@@ -62,6 +64,7 @@ function generateGridCell(innerNumber, cellSize) {
     newCell.innerHTML = parseInt(innerNumber);
     return newCell;
 }
+
 
 /**
  * Genera un'array di 16 numeri casuali non ripetuti, compresi tra 1 e X numeri
@@ -86,16 +89,23 @@ function generateBombs(max) {
  */
 function handleCellClick() {
     const clickedNumber = parseInt(this.textContent);
-    
+    result.innerHTML = "";
         if(bombs.includes(clickedNumber)){
+            this.classList.add("bomb");
             result.innerHTML = `HAI PERSO DOPO ${clickCell.length} TENTATIVI`;
             gameEnd();  
         } else {
-            this.style.backgroundColor = "lightblue";
+            if(bombs.includes(clickedNumber - 1) || bombs.includes(clickedNumber + 1)){
+                result.innerHTML = "ATTENTO, HAI UNA BOMBA VICINO!"
+                this.style.backgroundColor = "darkorange";
+            } else {
+                this.style.backgroundColor = "lightblue";
+            }
+            
             if(clickCell.length < (gridSize - bombs.length) - 1){
                 clickCell.push(clickedNumber);
             } else {
-                result.innerHTML = "COMPLIMENTI! HAI VINTO!"
+                result.innerHTML = "COMPLIMENTI! HAI VINTO!";
                 gameEnd();
             }
         }
@@ -112,6 +122,7 @@ function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+
 /**
  * Gestisce il comportamento della griglia e delle bombe al finire del gioco
  * @returns {any}
@@ -119,10 +130,10 @@ function getRndInteger(min, max) {
 function gameEnd() {
     const allCell = document.querySelectorAll(".cell");
             for (let i = 0; i < allCell.length; i++) {
-                const element = allCell[i];
-                element.removeEventListener("click", handleCellClick)
-                if(bombs.includes(parseInt(element.textContent))) {
-                    element.style.backgroundColor = "darkred"
+                const singleCell = allCell[i];
+                singleCell.removeEventListener("click", handleCellClick)
+                if(bombs.includes(parseInt(singleCell.textContent))) {
+                    singleCell.style.backgroundColor = "darkred"
                 }
             }
 }
