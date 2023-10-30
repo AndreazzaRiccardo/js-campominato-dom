@@ -33,6 +33,8 @@ playBtn.addEventListener("click", function(event){
         cell.addEventListener("click", handleCellClick);
         gridElem.append(cell);
     }
+
+    bombs = generateBombs(gridSize);
 })
 
 
@@ -57,4 +59,30 @@ function handleCellClick() {
     const clickedNumber = parseInt(this.textContent);
     this.style.backgroundColor = "lightblue"
     console.log(clickedNumber);
+}
+
+/**
+ * Genera un'array di 16 numeri casuali non ripetuti, compresi tra 1 e X numeri
+ * @param {number} max
+ * @returns {array}
+ */
+function generateBombs(max) {
+    const resultBomb = [];
+    while(resultBomb.length < 16) {
+        let rndNum = getRndInteger(1, max)
+        if(!resultBomb.includes(rndNum)){
+            resultBomb.push(rndNum)
+        }
+    }
+    return resultBomb;
+}
+
+/**
+ * Genera un numero casuale compreso tra un numero min e uno max
+ * @param {number} min
+ * @param {number} max
+ * @returns {number}
+ */
+function getRndInteger(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
