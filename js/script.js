@@ -14,7 +14,6 @@ playBtn.addEventListener("click", function(event){
     result.innerHTML      = "";
     let cellSize;
     clickCell = [];
-    clickedBomb = false;
     
     switch(difficultSelect.value) {
         case "easy":
@@ -83,35 +82,23 @@ function generateBombs(max) {
 
 /**
  * Gestisce tutto il comportamento del gioco, al click di ogni cella
+ * * @returns {any}
  */
 function handleCellClick() {
     const clickedNumber = parseInt(this.textContent);
-    if(!clickedBomb){
+    
         if(bombs.includes(clickedNumber)){
-            this.style.backgroundColor = "darkred";
             result.innerHTML = `HAI PERSO DOPO ${clickCell.length} TENTATIVI`;
-            clickedBomb = true;
+            gameEnd();  
         } else {
             this.style.backgroundColor = "lightblue";
-
             if(clickCell.length < (gridSize - bombs.length) - 1){
                 clickCell.push(clickedNumber);
             } else {
                 result.innerHTML = "COMPLIMENTI! HAI VINTO!"
-                clickedBomb = true;
+                gameEnd();
             }
         }
-    } 
-
-    if(clickedBomb){
-        const allCell = document.querySelectorAll(".cell");
-        for (let i = 0; i < allCell.length; i++) {
-            const element = allCell[i];
-            if(bombs.includes(parseInt(element.textContent))) {
-                element.style.backgroundColor = "darkred"
-            }
-        }
-    }
 }
 
 
@@ -123,4 +110,19 @@ function handleCellClick() {
  */
 function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+/**
+ * Gestisce il comportamento della griglia e delle bombe al finire del gioco
+ * @returns {any}
+ */
+function gameEnd() {
+    const allCell = document.querySelectorAll(".cell");
+            for (let i = 0; i < allCell.length; i++) {
+                const element = allCell[i];
+                element.removeEventListener("click", handleCellClick)
+                if(bombs.includes(parseInt(element.textContent))) {
+                    element.style.backgroundColor = "darkred"
+                }
+            }
 }

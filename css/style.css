@@ -65,7 +65,7 @@ button {
 .grid {
     display: flex;
     flex-wrap: wrap;
-    width: 801px;
+    width: 800px;
     font-weight: bolder;
     font-size: 1.4rem;
     background-color: rgb(170, 218, 170);

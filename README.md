@@ -23,35 +23,27 @@ con difficoltà 3 => tra 1 e 49
         -gli assegno una grandezza sulla base della difficoltà scelta;
         -inserisco all'interno dell'elemento il numero del suo indice creato con il ciclo for;
         -ritorno il mio elemento cosi' completo;
+
 2. Definisco una funzione che conterrà la logica di gioco al click di ogni cella:
 
 -creo una costante che identifichi il numero all'interno della cella che clicco;
 
         -imposto delle condizione annidate:
-                SE (il mio flag è false) {
-                        SE(l'array bombs contiene il numero da me cliccato){
-                                -colora questo elemento di rosso;
-                                -stampa il messaggio di sconfitta contenente anche il numero di celle che ho cliccato prima di perdere;
-                                -imposta il mio flag true;
-                        } ALTRIMENTI {
-                                -colora questo elemento di blu;
-                                SE(il numero di celle cliccate finora è minore del totale delle celle meno la lunghezza dell'array bombs) {
-                                        -pusha il valore di questa cella nel mio array di celle già cliccate;
-                                } ALTRIMENTI {
-                                        -stampa il messaggio di vittoria;
-                                        -imposta il mio flag true;
-                                }
+                SE (l'array bombs include il numero cliccato) {
+                        -stampa un messaggio di sconfitta;
+                        -invoca la funzione endGame;
+                } ALTRIMENTI {
+                        -colora la cella di blu;
+                        SE (la lunghezza dell'array delle celle cliccate è inferiore al totale delle cell meno le bombe) {
+                                pusha il valore all'interno dell'array;
+                        }ALTRIMENTI{
+                                -stampa il messaggio di vittoria;
+                                -invoca la funzione endGame
                         }
                 }
-        
--Per rendere visibili tutte le celle bomba in caso di sconfitta o di vittoria, imposto un'altra condizione:
 
-        SE(il mio flag è true){
-                -imposta un ciclo for per estrapolare ogni valore da ogni cella, e se un valore è contenuto nel mio array bombs, allora colora quell'elemento di rosso;
-        }
-
-                
 3. Definisco una funzione per creare un numero random compreso tra 1 e un numero massimo;
+
 4. Definisco una funzione in grado di restituirmi un array di 16 numeri casuali compresi tra 1 e la grandezza della griglia, sulla base alla difficoltà selezionata:
 
         -creo una costante array vuota;
@@ -62,8 +54,11 @@ con difficoltà 3 => tra 1 e 49
                 -SE il mio numero casuale non è gia presente nell'array, inseriscilo nell'array;
         -come valore di ritorno ho il mio array completo;
 
-
-        
+5. Definisco una funzione contenente gli eventi da sviluppare in caso la partita finisca:
+Con un ciclo for:
+        -creo una costante abbinata ad ogni singola cella;
+        -rimuovo l'eventListener da ogni cella;
+        -gli dico che se il suo valore era incluso nell'array bombs, deve colorarsi di rosso;
 
 **DATI**
 1. Definisco una costante abbinata al mio bottone play;
@@ -77,11 +72,10 @@ con difficoltà 3 => tra 1 e 49
 
 1. Sapendo che l'evento scatenante del gioco è il play del bottone, assegno subito un eventListener al mio bottone, dove poi andrò ad inserire tutta la logica;
 2. Ripulisco tutti i miei elementi html, in modo che ad ogni play venga resettato tutto;
-3. Creo una variabile flag per determinare se una casella bomba è stata cliccata;
-4. Creo 3 switch, una per ogni difficoltà, contenenti come valori il numero di celle da generare e la loro grandezza;
-5. Creo un ciclo for che utilizzerà le variabili del mio switch per generare una griglia sulla base della difficoltà selezionata, che sarà cosi strutturato:
+3. Creo 3 switch, una per ogni difficoltà, contenenti come valori il numero di celle da generare e la loro grandezza;
+4. Creo un ciclo for che utilizzerà le variabili del mio switch per generare una griglia sulla base della difficoltà selezionata, che sarà cosi strutturato:
 
         -invoco la mia funzione per creare le celle inserendo l'indice di ogni cella e la gendezza che dovrà avere; 
         -assegno ad ogni cella cosi' creata la mia funzione di click, contenente la logica di gioco;
         -appendo tutto le celle cosi create, alla mia griglia;
-6. Genero le bombe invocando l'apposita funzione e dandogli come valore massimo la grandezza della griglia generata;
+5. Genero le bombe invocando l'apposita funzione e dandogli come valore massimo la grandezza della griglia generata;
