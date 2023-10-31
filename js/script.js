@@ -73,7 +73,7 @@ function generateGridCell(innerNumber, cellSize) {
  */
 function generateBombs(max) {
     const resultBomb = [];
-    while(resultBomb.length < 1) {
+    while(resultBomb.length < 16) {
         let rndNum = getRndInteger(1, max)
         if(!resultBomb.includes(rndNum)){
             resultBomb.push(rndNum)
