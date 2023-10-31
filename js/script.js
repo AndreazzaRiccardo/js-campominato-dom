@@ -3,7 +3,7 @@ const difficult = document.getElementById("difficult");
 const gridElem  = document.querySelector(".grid");
 const result    = document.querySelector(".result");
 let clickCell   = [];
-let bombs
+let bombs       = [];
 let gridSize
 
 
@@ -73,7 +73,7 @@ function generateGridCell(innerNumber, cellSize) {
  */
 function generateBombs(max) {
     const resultBomb = [];
-    while(resultBomb.length < 16) {
+    while(resultBomb.length < 1) {
         let rndNum = getRndInteger(1, max)
         if(!resultBomb.includes(rndNum)){
             resultBomb.push(rndNum)
@@ -88,6 +88,7 @@ function generateBombs(max) {
  * * @returns {any}
  */
 function handleCellClick() {
+    let maxClick    = gridSize - bombs.length;
     const clickedNumber = parseInt(this.textContent);
     result.innerHTML = "";
         if(bombs.includes(clickedNumber)){
@@ -95,16 +96,17 @@ function handleCellClick() {
             result.innerHTML = `HAI PERSO DOPO ${clickCell.length} TENTATIVI`;
             gameEnd();  
         } else {
-            if(bombs.includes(clickedNumber - 1) || bombs.includes(clickedNumber + 1)){
-                result.innerHTML = "ATTENTO, HAI UNA BOMBA VICINO!"
-                this.style.backgroundColor = "darkorange";
-            } else {
-                this.style.backgroundColor = "lightblue";
+            if(!clickCell.includes(clickedNumber)){
+                clickCell.push(clickedNumber);
+                if(bombs.includes(clickedNumber - 1) || bombs.includes(clickedNumber + 1)){
+                    result.innerHTML = "ATTENTO, HAI UNA BOMBA VICINO!"
+                    this.style.backgroundColor = "darkorange";
+                } else {
+                    this.style.backgroundColor = "lightblue";
+                }
             }
             
-            if(clickCell.length < (gridSize - bombs.length) - 1){
-                clickCell.push(clickedNumber);
-            } else {
+            if (clickCell.length === maxClick){
                 result.innerHTML = "COMPLIMENTI! HAI VINTO!";
                 gameEnd();
             }
@@ -131,9 +133,9 @@ function gameEnd() {
     const allCell = document.querySelectorAll(".cell");
             for (let i = 0; i < allCell.length; i++) {
                 const singleCell = allCell[i];
-                singleCell.removeEventListener("click", handleCellClick)
+                singleCell.removeEventListener("click", handleCellClick);
                 if(bombs.includes(parseInt(singleCell.textContent))) {
-                    singleCell.style.backgroundColor = "darkred"
+                    singleCell.style.backgroundColor = "darkred";
                 }
             }
 }
