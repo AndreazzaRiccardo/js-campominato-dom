@@ -1,82 +1,85 @@
-### ESERCIZIO:
+### EXERCISE:
 
-Generare una griglia di gioco quadrata in cui ogni cella contiene un numero compreso tra 1 e 100.
-Il computer deve generare 16 numeri casuali nello stesso range della difficoltà prescelta: le bombe.
-I numeri nella lista delle bombe non possono essere duplicati.
-[23, 65, 1, 4,78,15,....];
-In seguito l'utente clicca su una cella: se il numero è presente nella lista dei numeri generati - abbiamo calpestato una bomba - la cella si colora di rosso e la partita termina, altrimenti la cella cliccata si colora di azzurro e l'utente può continuare a cliccare sulle altre celle.
-La partita termina quando il giocatore clicca su una bomba o raggiunge il numero massimo possibile di numeri consentiti.
-Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l’utente ha cliccato su una cella che non era una bomba.
+Generate a square game grid where each cell contains a number between 1 and 100.
+The computer must generate 16 random numbers in the same range of the chosen difficulty: bombs.
+The numbers in the bomb list cannot be duplicated.
+[23, 65, 1, 4,78,15,.... ];
+Then the user clicks on a cell: if the number is present in the list of generated numbers - we stepped on a bomb - the cell turns red and the game ends, otherwise the clicked cell turns blue and the user can continue to click on the other cells.
+The game ends when the player clicks on a bomb or reaches the maximum possible number of numbers.
+At the end of the game the software must communicate the score, that is, the number of times the user clicked on a cell that was not a bomb.
 **BONUS:**
-1 - L'utente indica un livello di difficoltà in base al quale viene generata una griglia di gioco quadrata, in cui ogni cella contiene un numero tra quelli compresi in un range:
-con difficoltà 1 => tra 1 e 100
-con difficoltà 2 => tra 1 e 81
-con difficoltà 3 => tra 1 e 49
-**2- quando si clicca su una bomba e finisce la partita, evitare che si possa cliccare su altre celle
-****3- quando si clicca su una bomba e finisce la partita, il software scopre tutte le bombe nascoste
+1 - The user indicates a difficulty level according to which a square game grid is generated, in which each cell contains a number among those included in a range:
+with difficulty 1 => between 1 and 100
+with difficulty 2 => between 1 and 81
+with difficulty 3 => between 1 and 49
+**2- when you click on a bomb and finish the game, avoid that you can click on other cells
+****3- when you click on a bomb and the game ends, the software discovers all the hidden bombs
 
-### FUNZIONI:
-1. Definisco una funzione per generare gli elementi cella nel mio HTML:
+### FUNCTIONS:
+1. I define a function to generate cell elements in my HTML:
 
-        -creo il mio elemento div;
-        -gli assegno una classe predefinita in css;
-        -gli assegno una grandezza sulla base della difficoltà scelta;
-        -inserisco all'interno dell'elemento il numero del suo indice creato con il ciclo for;
-        -ritorno il mio elemento cosi' completo;
+        -I create my element div;
+        -give it a predefined class in css;
+        -give it a size on the basis of the difficulty chosen;
+        -I insert inside the element its index number created with the for loop;
+        -return my item so complete;
 
-2. Definisco una funzione che conterrà la logica di gioco al click di ogni cella:
+2. I define a function that will contain the game logic at the click of each cell:
 
--creo una costante che identifichi il numero all'interno della cella che clicco;
+-I create a constant that identifies the number within the cell I click;
 
-        -imposto delle condizione annidate:
-                SE (l'array bombs include il numero cliccato) {
-                        -stampa un messaggio di sconfitta;
-                        -invoca la funzione endGame;
-                } ALTRIMENTI {
-                        -colora la cella di blu;
-                        SE (la lunghezza dell'array delle celle cliccate è inferiore al totale delle cell meno le bombe) {
-                                pusha il valore all'interno dell'array;
-                        }ALTRIMENTI{
-                                -stampa il messaggio di vittoria;
-                                -invoca la funzione endGame
+        -the setting of nested conditions:
+                SE (the bombs array includes the number clicked) {
+                        -print a defeat message;
+                        -invoke the endgame function;
+                } OTHERWISE {
+                        -colour the cell blue;
+                        IF (the length of the array of cells clicked is less than the total of cells minus bombs) {
+                                pushes the value inside the array;
+                        }OTHERWISE{
+                                -print the victory message;
+                                -invoke the endgame function
                         }
                 }
 
-3. Definisco una funzione per creare un numero random compreso tra 1 e un numero massimo;
+3. I define a function to create a random number between 1 and a maximum number;
 
-4. Definisco una funzione in grado di restituirmi un array di 16 numeri casuali compresi tra 1 e la grandezza della griglia, sulla base alla difficoltà selezionata:
+4. I define a function that can return an array of 16 random numbers between 1 and the size of the grid, based on the difficulty selected:
 
-        -creo una costante array vuota;
-        -creo un ciclo while:
-                -fino a quando la lunghezza del mio array è minore di 16 {
-                        -genera un numero casuale;
+        -create a constant empty array;
+        -create a while loop:
+                -until the length of my array is less than 16 {
+                        -generate a random number;
                 }
-                -SE il mio numero casuale non è gia presente nell'array, inseriscilo nell'array;
-        -come valore di ritorno ho il mio array completo;
+                -IF my random number is not already present in the array, insert it into the array;
+        -as return value I have my full array;
 
-5. Definisco una funzione contenente gli eventi da sviluppare in caso la partita finisca:
-Con un ciclo for:
+5. I define a function containing the events to be developed in case the game ends:
+With a cycle for:
 
-        -creo una costante abbinata ad ogni singola cella;
-        -rimuovo l'eventListener da ogni cella;
-        -gli dico che se il suo valore era incluso nell'array bombs, deve colorarsi di rosso;
+        -create a constant matched to each individual cell;
+        -remove the eventlistener from each cell;
+        -I tell him that if his value was included in the array bombs, he must turn red;
 
-**DATI**
-1. Definisco una costante abbinata al mio bottone play;
-2. Definisco una costante abbinata all'elemento select della difficoltà;
-3. Definisco una costante abbinata al contenitore delle mio future celle;
-4. Definisco una costante abbinata al div che conterrà i vari messaggi riguardanti lo svolgimento del gioco;
-5. Definisco una variabile globale da utilizzare all'interno della mia funzione di gameplay, contenente l'array bombs;
-6. Definisco una variabile globale in cui pusherò mano a mano i valori contenuti nelle celle già cliccate;
+**DATA**
+1. I define a constant matched to my play button;
+2. I define a constant associated with the select element of the difficulty;
+3. I define a constant matched to the container of my future cells;
+4. I define a constant that is linked to the div that will contain the various messages concerning the development of the game;
+5. I define a global variable to be used within my gameplay function, containing the array bombs;
+6. I define a global variable in which I will push the values contained in the cells already clicked;
 
-### SVOLGIMENTO:
+### DEVELOPMENT:
 
-1. Sapendo che l'evento scatenante del gioco è il play del bottone, assegno subito un eventListener al mio bottone, dove poi andrò ad inserire tutta la logica;
-2. Ripulisco tutti i miei elementi html, in modo che ad ogni play venga resettato tutto;
-3. Creo 3 switch, una per ogni difficoltà, contenenti come valori il numero di celle da generare e la loro grandezza;
-4. Creo un ciclo for che utilizzerà le variabili del mio switch per generare una griglia sulla base della difficoltà selezionata, che sarà cosi strutturato:
+1. Knowing that the triggering event of the game is the play of the button, I immediately assign an eventlistener to my button, where then I will enter all the logic;
+2. I clean up all my html elements, so that every play will reset everything;
+3. I create 3 switches, one for each difficulty, containing as values the number of cells to be generated and their size;
+4. I create a for cycle that will use the variables of my switch to generate a grid based on the difficulty selected, which will be structured as follows:
 
-        -invoco la mia funzione per creare le celle inserendo l'indice di ogni cella e la gendezza che dovrà avere; 
-        -assegno ad ogni cella cosi' creata la mia funzione di click, contenente la logica di gioco;
-        -appendo tutto le celle cosi create, alla mia griglia;
-5. Genero le bombe invocando l'apposita funzione e dandogli come valore massimo la grandezza della griglia generata;
+        -I invoke my function to create cells by inserting the index of each cell and the gendeness it will have; 
+        -assign to each cell so created my click function, containing the game logic;
+        -I hang all the cells thus created, on my grid;
+5. I generate bombs by invoking the appropriate function and giving them the maximum value of the generated grid;
+
+
+![Screenshot 2024-02-08 182635](https://github.com/AndreazzaRiccardo/js-campominato-dom/assets/136316597/b0e65c63-6a28-47e0-ad8f-f6e3917d7626)
